@@ -1,0 +1,12 @@
+---
+- name: "Install Calico CNI on EKS using Kubernetes Manifest File"
+  hosts: localhost
+  vars:
+    aws_eks_cluster_name: "{{ aws_eks_cluster_name }}"
+  tasks:
+    - name: "Execute the script to configure aws credentials to run kube commands"
+      shell: "sh full-calico-cni-task.sh"
+      register: script_result
+    - debug:
+        msg: "Script output: {{ script_result.stdout }}"
+      loop: "{{ script_result.stdout.splitlines() }}"
